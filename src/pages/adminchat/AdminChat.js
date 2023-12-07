@@ -23,6 +23,7 @@ import { Reply as ReplyIcon, Close } from "@mui/icons-material";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
+import ReplyMessage from '../../components/message/ReplyMessage';
 import UserList from '../../components/message/UserList';
 
 import { getCustomers, getMessageWS, sendMessageWS } from '../../redux/chat/actions';
@@ -30,7 +31,6 @@ import { onShowAlert } from '../../redux/user/actions';
 
 import Message from "../../components/message/Message";
 import FileMessageModal from "../../components/message/FileMessageModal";
-import ReplyMessage from 'src/components/message/ReplyMessage';
 
 
 
@@ -115,7 +115,7 @@ const AdminChat = () => {
         }
     }
     const getMessageById = (id) => {
-        return messageList.find((val) => val._id == id);
+        return messageList.find((val) => val._id === id);
     }
     const onCloseFileMessageModal = () => {
         setImageUrl(null);
@@ -273,7 +273,7 @@ const AdminChat = () => {
                                     alignItems: "center"
                                 }}>
                                 <ReplyIcon sx={{ width: 50, height: 50 }} />
-                                <Divider orientation='vertical' flexItem color='white'></Divider>
+                                <Divider orientation='vertical' flexItem color='white'/>
                                 <ReplyMessage
                                     setLatestView={setLatestView}
                                     message={getMessageById(replyTo)} />

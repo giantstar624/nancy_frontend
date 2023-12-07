@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Box, Card, Typography, Link, Stack, IconButton } from "@mui/material";
+import { Reply as ReplyIcon } from "@mui/icons-material";
+import { useTheme } from "@emotion/react";
 import getTime from "../../utils/getTime";
 import config from "../../utils/config";
-import { Reply as ReplyIcon } from "@mui/icons-material";
 import ReplyMessage from "./ReplyMessage";
-import { useTheme } from "@emotion/react";
+
 const Message = ({ message, setLatestView, replyCallback, getMessageById, toReply = false, stop = false }) => {
     const [mouseOver, setMouseOver] = useState(false);
     const theme = useTheme();
