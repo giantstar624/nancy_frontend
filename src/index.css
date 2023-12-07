@@ -1,0 +1,54 @@
+html{
+    background-color: #232323;
+}
+.body{
+    background-color: black;
+}
+
+#root{
+    background-color: #232323;
+}
+
+.carousel-slider .control-dots .dot{
+    width: 14px;
+    height: 14px;
+}
+
+.carousel-slider .slider-wrapper .slider {
+    min-height: 240px;
+}
+
+
+#sign-up-effect {
+    background-color: #32af0f;
+    width: 110%;
+    height: 110%;
+    position: absolute;
+    border-radius: 50px;
+    animation-name: example;
+    animation-duration: 2s;
+    z-index: -1;
+    animation-iteration-count: infinite;
+}
+
+@keyframes example {
+
+    0%   {
+        /* background-color: red; */
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+    }
+    5%  {
+        /* background-color: red; */
+        width: 105%;
+        height: 110%;
+        opacity: 1;
+    }
+    100% {
+        /* background-color: red; */
+        width: 150%;
+        height: 300%;
+        opacity: 0;
+    }
+}

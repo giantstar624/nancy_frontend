@@ -1,0 +1,58 @@
+.container-image {
+    position: relative;
+    width: 100%;
+}
+
+.image {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+
+.middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.container-image:hover .image {
+    opacity: 0.3;
+}
+
+.container-image:hover .middle {
+    opacity: 1;
+}
+
+.text {
+    color: white;
+    font-size: 16px;
+    padding: 16px 16px;
+}
+
+.text:hover {
+    cursor: pointer;
+}
+
+.title {
+    text-overflow: ellipsis !important;
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 30px;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.container-image:hover .title {
+    opacity: 1;
+}

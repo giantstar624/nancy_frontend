@@ -1,0 +1,18 @@
+export const GET_POST_DATA = "GET_POST_DATA";
+export const GET_REVIEW_DATA = "GET_REVIEW_DATA";
+export const GET_PROMO_DATA = "GET_PROMO_DATA";
+
+
+export const GET_BANNERS_DATA = "GET_BANNERS_DATA";
+export const CREATE_BANNERS = "CREATE_BANNERS";
+export const DELETE_BANNERS = "DELETE_BANNERS";
+export const UPDATE_BANNERS = "UPDATE_BANNERS";
+
+export const GET_MAQ_DATA = "GET_MAQ_DATA";
+export const CHANGE_MAQ_DATA = "CHANGE_MAQ_DATA";
+
+export const GET_GAMES_DATA = "GET_GAMES_DATA";
+export const UPDATE_GAME_ICON = "UPDATE_GAME_ICON";
+export const UPDATE_GAME_URL = "UPDATE_GAME_URL";
+export const CREATE_GAMES = "CREATE_GAMES";
+export const DELETE_GAMES = "DELETE_GAMES";
