@@ -46,7 +46,6 @@
     "@mui/icons-material": "^5.10.16",
     "@mui/lab": "^5.0.0-alpha.103",
     "@mui/material": "^5.10.9",
-    "@trycourier/courier": "^6.0.1",
     "antd-img-crop": "^4.5.2",
     "apexcharts": "^3.36.0",
     "axios": "^1.2.0",
