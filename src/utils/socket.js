@@ -22,6 +22,6 @@ export const getSocketInited = () => isInited;
 
 const socket = io.connect(HostingURI, options);
 
-console.log(socket);
+// console.log(socket);
 
 export default socket;

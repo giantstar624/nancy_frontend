@@ -30,7 +30,7 @@ const UserList = ({ mobileScreen, userList, curPage, setCurPage,selectedUser, se
                     key={index} >
                     {item.user && <UserItem
                         id={item.user._id}
-                        curUserName = {selectedUser}
+                        isSelected = {selectedUser === item.userName}
                         userName={item.user.name}
                         firstName={item.user.firstname}
                         lastName={item.user.lastname}

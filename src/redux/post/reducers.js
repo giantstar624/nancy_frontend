@@ -68,7 +68,7 @@ export function postReducer(state = initialState, action) {
                     });
                 }
             }
-            console.log(tmp)
+            // console.log(tmp)
             return {
                 ...state,
                 posts: tmp

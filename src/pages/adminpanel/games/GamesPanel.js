@@ -165,7 +165,7 @@ const GamesPanel = ({
 
         if(uploadType === "new") {   
             createGame({image, url}, res=>{
-                console.log("success");
+                // console.log("success");
                 setOpen(false);
             })
         } else if(uploadType === "update-icon") {

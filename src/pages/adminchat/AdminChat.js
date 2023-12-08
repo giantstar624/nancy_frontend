@@ -128,25 +128,25 @@ const AdminChat = () => {
 
     useEffect(() => {
 
-        console.log("history = >", chatHistory);
+        // console.log("history = >", chatHistory);
 
         const _messageList = [];
 
         Object.values(chatHistory).forEach(item => {
 
-            // const chat = {sender: "James", party: "sender", type: "Text", message:"Hi", date: new Date()};
-            const chat = item;
+            const chat = {sender: "James", party: "sender", type: "Text", message:"Hi", date: item.date};
+            // const chat = Object.assign(item);
             if (_id === item.from) {
                 chat.party = "sender";
             }
             else {
                 chat.party = "receiver";
             }
-            // chat.date = item.date;
-            // chat.message = item.message;
-            // chat.caption = item.caption;
-            // chat.sender = item.senderName;
-            // chat.type = item.type;
+            chat.date = item.date;
+            chat.message = item.message;
+            chat.caption = item.caption;
+            chat.sender = item.senderName;
+            chat.type = item.type;
 
             _messageList.push(chat);
         });

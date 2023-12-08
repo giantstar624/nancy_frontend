@@ -42,7 +42,7 @@ const PinPanel = ({
 
     const changeMaqText = () => {
         chagneMaq({id:_id, text:maqText}, res=>{
-            console.log(res);
+            // console.log(res);
         });
     }
 

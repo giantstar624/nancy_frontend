@@ -86,8 +86,7 @@ const FileMessageModal = ({ open, handleClose, url, imageFile, setImageFile, sen
             setLoading(true);
             dispatch(onSendImage(imageFile, res => {
                 if (res.success) {
-
-                    console.log("upload successfully. Boradcase image");
+                    // console.log("upload successfully. Boradcase image");
                     sendMessage(res.image, "image", caption);
                     setImageFile(null)
                 } else {

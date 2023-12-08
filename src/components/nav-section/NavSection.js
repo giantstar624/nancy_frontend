@@ -50,12 +50,12 @@ export default function NavSection({ data = [], role, isLogin, ...other }) {
     if(!flag && _id) {
           
       socket.emit("connection", () => {
-          console.log("connection");
+          // console.log("connection");
       });
       
       socket.on("message:created", (data) => {
           
-          console.log("message created from another", data);
+          // console.log("message created from another", data);
           dispatch({
               type: ADD_MESSAGE,
               payload: data
@@ -63,7 +63,7 @@ export default function NavSection({ data = [], role, isLogin, ...other }) {
       });
       
       socket.on("message:looked", (data) => {            
-        console.log("support have seen new message");
+        // console.log("support have seen new message");
   
         dispatch({
             type: MESSAGE_LOOKED,
@@ -72,10 +72,9 @@ export default function NavSection({ data = [], role, isLogin, ...other }) {
       });
 
       socket.on("logout", (data) => {            
-        console.log("LOGOUT!!!!!!!!!!!");
+        // console.log("LOGOUT!!!!!!!!!!!");
         dispatch(Logout());
       });
-      console.log("here", role)
       if(role!==0 && role!=="0" ) {
         dispatch(getCustomers());
       } 
@@ -84,7 +83,7 @@ export default function NavSection({ data = [], role, isLogin, ...other }) {
 
     let flg = false;
 
-    console.log("flag", users);
+    // console.log("flag", users);
 
     Object.values(users).forEach(item => {
       if(item.isnew === true) {
@@ -108,7 +107,7 @@ export default function NavSection({ data = [], role, isLogin, ...other }) {
   }, [looked, roomId]);
 
   useEffect(()=>{
-    console.log("getbanners")
+    // console.log("getbanners")
     dispatch(getBanners());
     dispatch(getGames());
     dispatch(getMaq());

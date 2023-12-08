@@ -180,7 +180,7 @@ const UserPanel = ({
 
     const onDelete = (id, status) => {
 
-        console.log("asdf");
+        // console.log("asdf");
         actionDeleteUser({id}, res => {
             if(res.success) {
                 getDataHandler(page, rowsPerPage);

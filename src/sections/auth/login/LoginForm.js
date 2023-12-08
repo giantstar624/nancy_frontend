@@ -12,7 +12,7 @@ import { LoginRequest } from '../../../redux/user/actions'
 
 const remEmail = localStorage.getItem("rem_email");
 const remPassword = localStorage.getItem("rem_password");
-console.log("remName", remEmail);
+// console.log("remName", remEmail);
 const LoginForm = ({ onLogin, handleClose }) => {
 
   const navigate = useNavigate();

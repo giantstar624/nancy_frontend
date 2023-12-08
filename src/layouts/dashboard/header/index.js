@@ -83,7 +83,7 @@ const Header = ({ onOpenNav, isLogin, openLoginOrSignupModal }) => {
 
   useEffect(()=>{
 
-    console.log("pathname", pathname);
+    // console.log("pathname", pathname);
 
     if(pathname === "/dashboard/chat") {
       setIsChat(true);

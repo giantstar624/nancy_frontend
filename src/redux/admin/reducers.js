@@ -65,13 +65,9 @@ export function adminReducer(state = initialState, action) {
         case DELETE_BANNERS: {
 
             const id = action.payload;
-
             let banners = [...state.banners];
-            console.log(banners, id)
+            // console.log(banners, id)
             banners = banners.filter((item)=>item._id !== id);
-
-            
-
             return {
                 ...state,
                 banners
@@ -142,11 +138,8 @@ export function adminReducer(state = initialState, action) {
             const id = action.payload;
 
             let games = [...state.games];
-            console.log(games, id)
+            // console.log(games, id)
             games = games.filter((item)=>item._id !== id);
-
-            
-
             return {
                 ...state,
                 games
@@ -157,7 +150,7 @@ export function adminReducer(state = initialState, action) {
 
         case GET_MAQ_DATA: {
 
-            console.log(action.payload);
+            // console.log(action.payload);
             const text = action.payload.length > 0 ? action.payload[0] : state.maqText;
 
             return {

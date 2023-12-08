@@ -164,8 +164,7 @@ const ReviewPanel = ({
         if (status === "active")
             tmp = "pending";
         else tmp = "active";
-
-        console.log("success...");
+        // console.log("success...");
         actionDeleteReview({ id, tmp }, res => {
             if (res.success) {
                 getDataHandler(page, rowsPerPage)

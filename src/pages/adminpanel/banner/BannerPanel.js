@@ -156,7 +156,7 @@ const BannerPanel = ({
 
         if(uploadType === "new") {   
             createBanner(image, res=>{
-                console.log("success");
+                // console.log("success");
                 setOpen(false);
             })
         } else {

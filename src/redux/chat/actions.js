@@ -27,9 +27,11 @@ export const getCustomers = () => {
 export function onSendImage(data, callback) {
     const formData = new FormData();
     formData.append('files', data);
-    console.log("send file...");
+
+    // console.log("send file...");
+
     return dispatch => api('chat/image', 'post', formData).then(res => {
-        console.log("[result] send file...")
+        // console.log("[result] send file...")
         callback(res);
     })
 }
@@ -44,7 +46,7 @@ export const setRoomId = (id) => {
 export const getMessageWS = (
     roomId
 ) => {
-    console.log("get message list = ", roomId);
+    // console.log("get message list = ", roomId);
     return dispatch => api('chat', 'post', {roomId}).then(res => {
         return dispatch({
             type: GET_CHAT_HISTORY,
@@ -59,7 +61,7 @@ export const getMessageWS = (
 export const onCloseSupport = (
     roomId
 ) => {
-    console.log("get message list = ", roomId);
+    // console.log("get message list = ", roomId);
     return dispatch => api('chat', 'delete', {roomId}).then(res => {
         return dispatch({
             type: DELETE_CHAT,
@@ -81,7 +83,7 @@ export const sendMessageWS = (
     cb
 ) => {
     return (dispatch, getState) => {
-        console.log(roomId);
+        // console.log(roomId);
         const props = {
             from: userId,
             to: roomId,
@@ -94,13 +96,13 @@ export const sendMessageWS = (
             date: new Date(),
         };
 
-        console.log("send message", props);
+        // console.log("send message", props);
 
         socket.emit("message:send", props, ({ error, id }) => {
             if (error) {
                 cb()
             } else {
-                console.log("receive message = ", id);
+                // console.log("receive message = ", id);
                 dispatch({
                     type: ADD_MESSAGE,
                     payload: {...props, _id:id}
@@ -120,7 +122,7 @@ export const sendLookedWS = (roomId) => {
 
         socket.emit("message:looked", props, ({ error, data }) => {
             if (error) {
-                console.log("message:send error");
+                // console.log("message:send error");
             } else {
                 dispatch({
                     type: MESSAGE_LOOKED,

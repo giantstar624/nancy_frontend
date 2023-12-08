@@ -1,7 +1,7 @@
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState} from 'react';
 import { Helmet } from 'react-helmet-async';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { Navigate, NavLink, useSearchParams, useNavigate  } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useSearchParams, useNavigate  } from 'react-router-dom';
 import { 
   Container, 
   AppBar, 
@@ -72,7 +72,8 @@ const ResetPassword = () => {
 
   const [redAlert, setRedAlert] = useState(false);
   const [sentLink, setSentLink] = useState(mail && mail!=="" && code && code !== "");
-  console.log(mail, code, sentLink);
+  
+  // console.log(mail, code, sentLink);
 
   useEffect(() => {
    

@@ -54,7 +54,7 @@ export function userReducer(state = initialState, action) {
 
     case CHANGE_AVATAR_SUCCESS: {
       sessionStorage.setItem('avatar', action.payload.url)
-      console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...state,
         userData: {
@@ -66,7 +66,7 @@ export function userReducer(state = initialState, action) {
 
     case CHANGE_USERNAME_SUCCESS: {
       sessionStorage.setItem('username', action.payload.username)
-      console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...state,
         userData: {
@@ -84,7 +84,7 @@ export function userReducer(state = initialState, action) {
     }
     case LOGOUT_REQUEST: {
 
-      console.log("logout request");
+      // console.log("logout request");
       
       sessionStorage.removeItem('token');
       sessionStorage.removeItem('username');

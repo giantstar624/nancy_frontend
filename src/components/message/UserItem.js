@@ -38,15 +38,16 @@ const UserItem = ({
     avatar,
     isNew,
     setCurPage,
-    curUserName,
+    isSelected,
     setSelectedUser,
     role,
 }) => {
-    console.log("isNew", isNew);
     const dispatch = useDispatch();
-
+    useEffect(()=>{
+        console.log("isNew", isNew);
+    });
     const onClick = () => {
-        if(curUserName !== userName)
+        if(!isSelected)
         {
             dispatch({
                 type: MESSAGE_LOOKED,
@@ -116,4 +117,6 @@ const UserItem = ({
     );
 };
 
-export default UserItem;
+export default React.memo(UserItem, (prev, next)=>{
+    return true;
+});

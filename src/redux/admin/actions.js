@@ -134,7 +134,7 @@ export function getSupportData(data, cb) {
 
 
 export function actionDeleteSupport(data, cb) {
-  console.log("onDelete support action");
+  // console.log("onDelete support action");
   return dispatch => api(`admin/support`, 'delete', {id:data}).then(
     res => cb(res)
   )
@@ -199,7 +199,7 @@ export function deleteBanner(id, cb) {
 
 export function getMaq() {
   return dispatch => api(`admin/maq`, 'get', {}).then( res => {
-    console.log(res.maq);
+    // console.log(res.maq);
     return dispatch({
       type: GET_MAQ_DATA,
       payload: res.maq
