@@ -172,10 +172,10 @@ const AdminChat = () => {
     }
 
     useEffect(() => {
-
         if (role === 0 || role === "0") {
             dispatch(getMessageWS(_id));
         } else {
+            console.log("get customers");
             dispatch(getCustomers());
         }
 
@@ -190,7 +190,7 @@ const AdminChat = () => {
                 <title> Chat | Nancy Room </title>
             </Helmet>
             <Box sx={{ display: "flex" }}>
-                {role > 0 && <UserList mobileScreen={mobileScreen} userList={users} curPage={curPage} setCurPage={setCurPage} setSelectedUser={setSelectedUser} />}
+                {role > 0 && <UserList mobileScreen={mobileScreen} userList={users} curPage={curPage} setCurPage={setCurPage} selectedUser={selectedUser} setSelectedUser={setSelectedUser} />}
 
                 <Container maxWidth="xl"
                     sx={{

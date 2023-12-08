@@ -32,8 +32,7 @@ export function chatReducer(state = initialState, action) {
         case GET_USERS_LIST: {
 
             const _users = action.payload;
-
-            // _users.sort((a, b) => b.isnew - a.isnew);
+            _users.sort((a, b) => a.order - b.order);
 
             return {
                 ...state,

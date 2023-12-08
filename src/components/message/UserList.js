@@ -3,7 +3,7 @@ import { Box} from "@mui/material";
 import { useSelector } from "react-redux";
 import UserItem from "./UserItem";
 
-const UserList = ({ mobileScreen, userList, curPage, setCurPage, setSelectedUser, theme }) => {
+const UserList = ({ mobileScreen, userList, curPage, setCurPage,selectedUser, setSelectedUser, theme }) => {
 
     const chatModule = useSelector((state) => state.chatModule);
     const roomId = chatModule.roomId;
@@ -30,6 +30,7 @@ const UserList = ({ mobileScreen, userList, curPage, setCurPage, setSelectedUser
                     key={index} >
                     {item.user && <UserItem
                         id={item.user._id}
+                        curUserName = {selectedUser}
                         userName={item.user.name}
                         firstName={item.user.firstname}
                         lastName={item.user.lastname}

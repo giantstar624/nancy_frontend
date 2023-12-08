@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { connect } from 'react-redux';
 
 // @mui
-import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox, Typography, Box } from '@mui/material';
+import { Stack, IconButton, InputAdornment, TextField, Typography, Box } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // components
 import Iconify from '../../../components/iconify';

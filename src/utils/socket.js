@@ -18,9 +18,7 @@ export const setSocketInited = () => {
     isInited = true;
 }
 
-export const getSocketInited = () => {
-    return isInited;
-}
+export const getSocketInited = () => isInited;
 
 const socket = io.connect(HostingURI, options);
 

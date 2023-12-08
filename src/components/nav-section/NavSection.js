@@ -75,8 +75,7 @@ export default function NavSection({ data = [], role, isLogin, ...other }) {
         console.log("LOGOUT!!!!!!!!!!!");
         dispatch(Logout());
       });
-
-      console.log("------get customer list-----");
+      console.log("here", role)
       if(role!==0 && role!=="0" ) {
         dispatch(getCustomers());
       } 
@@ -85,7 +84,7 @@ export default function NavSection({ data = [], role, isLogin, ...other }) {
 
     let flg = false;
 
-    console.log(users);
+    console.log("flag", users);
 
     Object.values(users).forEach(item => {
       if(item.isnew === true) {

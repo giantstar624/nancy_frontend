@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
 import { Box, Avatar, IconButton } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
+import { MESSAGE_LOOKED } from "../../redux/chat/action-types";
 
 import { getMessageWS, onCloseSupport } from "../../redux/chat/actions";
 import config from "../../utils/config";
@@ -37,16 +38,24 @@ const UserItem = ({
     avatar,
     isNew,
     setCurPage,
+    curUserName,
     setSelectedUser,
     role,
 }) => {
-
+    console.log("isNew", isNew);
     const dispatch = useDispatch();
 
     const onClick = () => {
-        setCurPage("message");
-        setSelectedUser(userName);
-        dispatch(getMessageWS(id));
+        if(curUserName !== userName)
+        {
+            dispatch({
+                type: MESSAGE_LOOKED,
+                payload: id,
+            });
+            dispatch(getMessageWS(id));
+            setCurPage("message");
+            setSelectedUser(userName);
+        }
     }
 
     const onCloseDM = (e) => {

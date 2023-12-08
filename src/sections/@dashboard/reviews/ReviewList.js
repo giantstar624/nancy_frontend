@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-// @mui
+
 import { Grid } from '@mui/material';
 import ReviewCard from './ReviewCard';
 
