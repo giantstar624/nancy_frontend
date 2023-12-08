@@ -134,19 +134,19 @@ const AdminChat = () => {
 
         Object.values(chatHistory).forEach(item => {
 
-            const chat = {sender: "James", party: "sender", type: "Text", message:"Hi", date: item.date};
-            // const chat = Object.assign(item);
+            // const chat = {sender: "James", party: "sender", type: "Text", message:"Hi", date: item.date};
+            const chat = {...item};
             if (_id === item.from) {
                 chat.party = "sender";
             }
             else {
                 chat.party = "receiver";
             }
-            chat.date = item.date;
-            chat.message = item.message;
-            chat.caption = item.caption;
-            chat.sender = item.senderName;
-            chat.type = item.type;
+            // chat.date = item.date;
+            // chat.message = item.message;
+            // chat.caption = item.caption;
+            // chat.sender = item.senderName;
+            // chat.type = item.type;
 
             _messageList.push(chat);
         });
