@@ -117,6 +117,4 @@ const UserItem = ({
     );
 };
 
-export default React.memo(UserItem, (prev, next)=>{
-    return true;
-});
+export default UserItem;
