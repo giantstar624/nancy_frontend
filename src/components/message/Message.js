@@ -20,7 +20,10 @@ const Message = ({ message, setLatestView, replyCallback, getMessageById, toRepl
                         message.party === "sender" || toReply ? "flex-start" : "flex-end",
                     margin: "5px"
                 }}
-                onClick={(e) => { console.log(123) }}
+                onClick={(e) => {
+                    // if (toReply) return;
+
+                }}
             >
                 <Card
                     onMouseOverCapture={() => setMouseOver(true)}
