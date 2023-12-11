@@ -2,29 +2,69 @@ import React, { useEffect, useState } from "react";
 import { Box, Card, Typography, Link, Stack, IconButton } from "@mui/material";
 import { Reply as ReplyIcon } from "@mui/icons-material";
 import { useTheme } from "@emotion/react";
+import { useSwipeable } from 'react-swipeable';
 import getTime from "../../utils/getTime";
 import config from "../../utils/config";
 import ReplyMessage from "./ReplyMessage";
 
 const Message = ({ message, setLatestView, replyCallback, getMessageById, toReply = false, isReplyPanel = false, stop = false }) => {
     const [mouseOver, setMouseOver] = useState(false);
+    const [showReplyButton, setShwoReplyButton] = useState(false);
+    const [replyButtonSize, setReplyButtonSize] = useState(0);
+    const [replyButtonColor, setReplybuttonColor] = useState("#00ffff");
+    const handler = useSwipeable({
+        onSwiping: (e) => {
+            if (e.dir === "Left") setShwoReplyButton(true);
+            else setShwoReplyButton(false);
+            let size = e.absX / 2;
+            setReplybuttonColor("#00ffff");
+            if (size < 0) size = 0;
+            else if (size > 50) {
+                size = 50;
+                setReplybuttonColor("#ffff00");
+            }
+            setReplyButtonSize(size);
+        },
+        onSwiped: () => {
+            if (toReply) return;
+            if (showReplyButton) {
+                setShwoReplyButton(false);
+                if (replyButtonSize === 50) replyCallback(message);
+            }
+        }
+
+    })
     const theme = useTheme();
     const contentHeight = 50;
     return (
         <>
             <Box
+                {...handler}
                 sx={{
                     cursor: toReply ? "pointer" : "unset",
                     display: "flex",
                     justifyContent:
                         message.party === "sender" || toReply ? "flex-start" : "flex-end",
-                    margin: "5px"
+                    margin: "5px",
+                    alignItems: "center"
                 }}
                 onClick={(e) => {
-                    // if (toReply) return;
-
+                    if (toReply) return;
+                    // setShwoReplyButton(true);
+                    replyCallback(message);
                 }}
             >
+                {
+                    !toReply && showReplyButton &&
+                    <IconButton
+                        edge="end"
+                        onClick={() => replyCallback(message)}
+                    // sx={{ width: 30, height: 30 }}
+                    >
+                        <ReplyIcon sx={{ color: replyButtonColor, width: replyButtonSize, height: replyButtonSize }} />
+
+                    </IconButton>
+                }
                 <Card
                     onMouseOverCapture={() => setMouseOver(true)}
                     onMouseOutCapture={() => setMouseOver(false)}
@@ -59,18 +99,7 @@ const Message = ({ message, setLatestView, replyCallback, getMessageById, toRepl
                             }
                     }
                 >
-                    {
-                        !toReply && mouseOver &&
 
-                        <IconButton
-                            edge="end"
-                            sx={{ width: 30, height: 30 }}
-                            onClick={() => replyCallback(message)}
-                        >
-                            <ReplyIcon sx={{ color: "#00ffff" }} />
-
-                        </IconButton>
-                    }
                     {
                         <Typography
                             variant="body1"
