@@ -87,7 +87,7 @@ export default function SignupMddal({ open, handleClose, handleLogin }) {
 
     return (
         <BootstrapDialog
-            onClose={handleClose}
+            // onClose={handleClose}
             aria-labelledby="customized-dialog-title"
             open={open}
         >

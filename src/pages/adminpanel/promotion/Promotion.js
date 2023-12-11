@@ -19,7 +19,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
 import { fDate } from '../../../utils/formatTime';
-import { getPromoData, submitPromo, actionPromo, actionDeletePromo } from '../../../redux/admin/actions';
+import { getPromoData, submitPromo, actionPromo, actionDeletePromo, setPromoTag } from '../../../redux/admin/actions';
 import config from '../../../utils/config';
 
 const StyledContent = styled('div')(({ theme }) => ({
@@ -42,15 +42,25 @@ function Row(props) {
                 <TableCell align="center"><img alt="" style={{ width: 120, }} src={`${config.server}:${config.port}/promoImg/${row?.image}`} /></TableCell>
                 <TableCell align="center">{row.content}</TableCell>
                 <TableCell align="center" component="th" scope="row">{fDate(row.createdAt)}</TableCell>
-                <TableCell align="center"><Chip label={row.status} color={`${row.status === 'show' ? 'success' : 'primary'}`} variant="outlined" /></TableCell>
-                <TableCell align="center" sx={{whiteSpace: "nowrap"}}>
-                    <Button 
-                        onClick={() => props.onAction(row._id, row.status)} 
+                <TableCell align="center" sx={{ whiteSpace: "nowrap" }}>
+                    <Chip label={row.status} color={`${row.status === 'show' ? 'success' : 'primary'}`} variant="outlined" />
+                    <Chip sx={{ ml: 1 }} label={row.showTag ? "Tagged" : "Untagged"} color={`${row.showTag ? 'success' : 'primary'}`} variant="outlined" />
+                </TableCell>
+                <TableCell align="center" sx={{ whiteSpace: "nowrap" }}>
+                    <Button
+                        onClick={() => props.onAction(row._id, row.status)}
                         style={{ color: 'white', backgroundColor: `${row.status === 'hide' ? 'green' : 'gray'}` }}
                     >
                         {row.status === 'show' ? 'hide' : 'show'}
                     </Button>
-                    <Button sx={{ml: 1}} onClick={() => props.onDelete(row._id, row.status)} style={{ color: 'white', backgroundColor: 'red' }}>Delete</Button>
+                    <Button
+                        onClick={() => props.onTag(row._id, row.showTag)}
+                        style={{ color: 'white', backgroundColor: `${!row.showTag ? 'green' : 'gray'}` }}
+                        sx={{ ml: 1 }}
+                    >
+                        {row.showTag ? 'Untag' : 'Tag'}
+                    </Button>
+                    <Button sx={{ ml: 1 }} onClick={() => props.onDelete(row._id, row.status)} style={{ color: 'white', backgroundColor: 'red' }}>Delete</Button>
                 </TableCell>
             </TableRow>
         </>
@@ -121,6 +131,7 @@ const PromotionPanel = ({
     submitPromo,
     getPromoData,
     actionPromo,
+    setPromoTag,
     actionDeletePromo
 }) => {
     const [promo, setPromo] = useState({
@@ -164,9 +175,17 @@ const PromotionPanel = ({
             }
         })
     }
+    const onTag = (id, showTag) => {
+        const tmp = !showTag;
+        setPromoTag({ id, tmp }, res => {
+            if (res.success) {
+                getDataHandler(page, rowsPerPage)
+            }
+        });
+    }
 
     const onDelete = (id, status) => {
-        
+
         actionDeletePromo({ id }, res => {
             if (res.success) {
                 getDataHandler(page, rowsPerPage)
@@ -185,7 +204,7 @@ const PromotionPanel = ({
     const onSubmit = () => {
         submitPromo(promo, res => {
             if (res.success) {
-                setPromo({ file: null, content: ''})
+                setPromo({ file: null, content: '' })
                 getDataHandler(page, rowsPerPage);
             }
         })
@@ -194,7 +213,7 @@ const PromotionPanel = ({
         if (promo.file && promo.content.length > 0)
             onSubmit();
     }
-    const handleCancel = () => setPromo({ file: null, content: ''});
+    const handleCancel = () => setPromo({ file: null, content: '' });
 
     useEffect(() => {
         getDataHandler(page, rowsPerPage);
@@ -210,7 +229,7 @@ const PromotionPanel = ({
     return (
         <>
             <Grid container spacing={2}>
-                <Grid item md={4} sm={12} xs={12}>
+                <Grid item md={3} sm={12} xs={12}>
                     <Stack direction="row" spacing={2} style={{ border: '2px solid #2065D1', borderRadius: 5, paddingTop: 10, paddingBottom: 10 }}>
 
                         <input
@@ -243,13 +262,13 @@ const PromotionPanel = ({
                     </StyledContent>
                     <StyledContent>
                         <Grid container spacing={2}>
-                            <Grid item md={6}><Button fullWidth style={{backgroundColor: 'green', color: 'white'}} onClick={handleCreatePromo}>Create</Button></Grid>
+                            <Grid item md={6}><Button fullWidth style={{ backgroundColor: 'green', color: 'white' }} onClick={handleCreatePromo}>Create</Button></Grid>
                             <Grid item md={6}><Button fullWidth variant="contained" color="primary" component="span" onClick={handleCancel}>Cancel</Button></Grid>
                         </Grid>
                     </StyledContent>
                 </Grid>
-                <Grid item md={8} sm={12} xs={12}>
-                    <TableContainer component={Paper} sx={{ width: 'auto', backgroundColor:"#ffffff05" }}>
+                <Grid item md={9} sm={12} xs={12}>
+                    <TableContainer component={Paper} sx={{ width: 'auto', backgroundColor: "#ffffff05" }}>
                         <Table aria-label="collapsible table" sx={{ minWidth: 750 }}>
                             <TableHead>
                                 <TableRow>
@@ -263,11 +282,12 @@ const PromotionPanel = ({
                             </TableHead>
                             <TableBody>
                                 {data.map((row) => (
-                                    <Row 
-                                        key={row._id} 
-                                        row={row} 
-                                        onAction={(id, status) => onAction(id, status)} 
-                                        onDelete={(id, status) => onDelete(id, status)} 
+                                    <Row
+                                        key={row._id}
+                                        row={row}
+                                        onAction={(id, status) => onAction(id, status)}
+                                        onDelete={(id, status) => onDelete(id, status)}
+                                        onTag={(id, status) => onTag(id, status)}
                                     />
                                 ))}
                             </TableBody>
@@ -299,8 +319,9 @@ const mapDispatchToProps = (dispatch) => ({
     getPromoData: (data, cb) => dispatch(getPromoData(data, cb)),
     submitPromo: (data, cb) => dispatch(submitPromo(data, cb)),
     actionPromo: (data, cb) => dispatch(actionPromo(data, cb)),
+    setPromoTag: (data, cb) => dispatch(setPromoTag(data, cb)),
     actionDeletePromo: (data, cb) => dispatch(actionDeletePromo(data, cb)),
-    
+
 })
 
 export default connect(null, mapDispatchToProps)(PromotionPanel);

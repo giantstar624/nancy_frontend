@@ -87,7 +87,7 @@ export default function LoginModal({ open, handleClose, handleSignup }) {
 
     return (
         <BootstrapDialog
-            onClose={handleClose}
+            // onClose={handleClose}
             aria-labelledby="customized-dialog-title"
             open={open}
         >

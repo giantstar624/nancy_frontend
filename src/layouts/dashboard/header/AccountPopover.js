@@ -40,6 +40,7 @@ const AccountPopover = ({ username, onLogout }) => {
   const handleLogout = () => {
     setOpen(null);
     onLogout();
+    navigate("/")
   }
 
   return (
@@ -61,9 +62,9 @@ const AccountPopover = ({ username, onLogout }) => {
           }),
         }}
       >
-        <Avatar 
+        <Avatar
           src={avatar ? `${config.server}:${config.port}/avatars/${avatar}` : `${config.server}:${config.port}/avatars/avatar_default.jpg`}
-          alt="photoURL" 
+          alt="photoURL"
         />
       </IconButton>
 
@@ -94,8 +95,8 @@ const AccountPopover = ({ username, onLogout }) => {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        
-        <MenuItem onClick={(e)=>{navigate("profile"); handleClose();}}>
+
+        <MenuItem onClick={(e) => { navigate("profile"); handleClose(); }}>
           Profile
         </MenuItem>
 

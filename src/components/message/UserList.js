@@ -1,9 +1,9 @@
 import React from "react";
-import { Box} from "@mui/material";
+import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import UserItem from "./UserItem";
 
-const UserList = ({ mobileScreen, userList, curPage, setCurPage,selectedUser, setSelectedUser, theme }) => {
+const UserList = ({ mobileScreen, userList, curPage, setCurPage, selectedUser, setSelectedUser, theme }) => {
 
     const chatModule = useSelector((state) => state.chatModule);
     const roomId = chatModule.roomId;
@@ -14,7 +14,7 @@ const UserList = ({ mobileScreen, userList, curPage, setCurPage,selectedUser, se
     return (
         <Box
             sx={{
-                height: mobileScreen ? "calc(100vh - 182px)" : "calc(100vh - 182px)",
+                // height: mobileScreen ? "calc(100vh - 182px)" : "calc(100vh - 182px)",
                 padding: "10px",
                 border: "1px solid #353a5a",
                 overflow: "scroll",
@@ -30,7 +30,7 @@ const UserList = ({ mobileScreen, userList, curPage, setCurPage,selectedUser, se
                     key={index} >
                     {item.user && <UserItem
                         id={item.user._id}
-                        isSelected = {selectedUser === item.userName}
+                        isSelected={selectedUser === item.userName}
                         userName={item.user.name}
                         firstName={item.user.firstname}
                         lastName={item.user.lastname}

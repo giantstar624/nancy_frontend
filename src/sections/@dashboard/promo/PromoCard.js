@@ -5,6 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import { CardHeader } from '@mui/material';
 import config from '../../../utils/config';
 import { fDate } from '../../../utils/formatTime';
 import ShowImgCard from './ShowImgCard';
@@ -35,9 +36,16 @@ const PromoCard = ({ promo }) => {
                         {fDate(promo.createdAt)}
                     </Typography>
                 </CardActions>
+                {promo.showTag ? <div style={{
+                    position: "absolute",
+                    right: "10px",
+                    top: "10px",
+                    backgroundColor: "green"
+                }}>New</div> : <></>}
+
             </Card>
-            <ShowImgCard open={open} handleClose={handleClose} url={`${config.server}:${config.port}/promoImg/${promo?.image}`}/>
-        </Grid>
+            <ShowImgCard open={open} handleClose={handleClose} url={`${config.server}:${config.port}/promoImg/${promo?.image}`} />
+        </Grid >
     );
 }
 

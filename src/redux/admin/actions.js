@@ -1,10 +1,10 @@
 import api from '../../utils/callApi';
-import { 
-  GET_BANNERS_DATA, 
-  CREATE_BANNERS, 
-  DELETE_BANNERS, 
-  UPDATE_BANNERS, 
-  GET_MAQ_DATA, 
+import {
+  GET_BANNERS_DATA,
+  CREATE_BANNERS,
+  DELETE_BANNERS,
+  UPDATE_BANNERS,
+  GET_MAQ_DATA,
   CHANGE_MAQ_DATA,
   GET_GAMES_DATA,
   UPDATE_GAME_ICON,
@@ -99,7 +99,11 @@ export function actionPromo(data, cb) {
     res => cb(res)
   )
 }
-
+export function setPromoTag(data, cb) {
+  return dispatch => api(`admin/promo/tag`, 'post', data).then(
+    res => cb(res)
+  )
+}
 export function actionDeletePromo(data, cb) {
   return dispatch => api(`admin/promo`, 'delete', data).then(
     res => cb(res)
@@ -107,7 +111,7 @@ export function actionDeletePromo(data, cb) {
 }
 
 export function actionAddChat(data, cb) {
-  return dispatch => api(`admin/chat`, 'post', {id:data}).then(
+  return dispatch => api(`admin/chat`, 'post', { id: data }).then(
     res => cb(res)
   )
 }
@@ -135,7 +139,7 @@ export function getSupportData(data, cb) {
 
 export function actionDeleteSupport(data, cb) {
   // console.log("onDelete support action");
-  return dispatch => api(`admin/support`, 'delete', {id:data}).then(
+  return dispatch => api(`admin/support`, 'delete', { id: data }).then(
     res => cb(res)
   )
 }
@@ -149,12 +153,13 @@ export function actionRegisterAgent(data, cb) {
 // ---------------------banner actioins---------------------
 
 export function getBanners() {
-  return dispatch => api(`admin/banner`, 'get', {}).then( res => {
-    
+  return dispatch => api(`admin/banner`, 'get', {}).then(res => {
+
     return dispatch({
       type: GET_BANNERS_DATA,
       payload: res.banners
-    })}
+    })
+  }
   )
 }
 
@@ -163,7 +168,7 @@ export function updateBanner(data, cb) {
   formData.append('file', data.image);
   formData.append('id', data.updateId);
 
-  return dispatch => api(`admin/banner`, 'put',formData).then(res => {
+  return dispatch => api(`admin/banner`, 'put', formData).then(res => {
     cb(res);
     return dispatch({
       type: UPDATE_BANNERS,
@@ -176,10 +181,10 @@ export function createBanner(data, cb) {
   const formData = new FormData();
   formData.append('file', data);
 
-  return dispatch => api(`admin/banner`, 'post', formData).then( res => {
-    
+  return dispatch => api(`admin/banner`, 'post', formData).then(res => {
+
     cb(res);
-    
+
     return dispatch({
       type: CREATE_BANNERS,
       payload: res
@@ -188,31 +193,34 @@ export function createBanner(data, cb) {
 }
 
 export function deleteBanner(id, cb) {
-  return dispatch => api(`admin/banner`, 'delete', {id}).then( res => {
+  return dispatch => api(`admin/banner`, 'delete', { id }).then(res => {
     return dispatch({
       type: DELETE_BANNERS,
       payload: id
-    })}
+    })
+  }
   )
 }
 
 
 export function getMaq() {
-  return dispatch => api(`admin/maq`, 'get', {}).then( res => {
+  return dispatch => api(`admin/maq`, 'get', {}).then(res => {
     // console.log(res.maq);
     return dispatch({
       type: GET_MAQ_DATA,
       payload: res.maq
-    })}
+    })
+  }
   )
 }
 
 export function chagneMaq(data, cb) {
-  return dispatch => api(`admin/maq`, 'post', data).then( res => {
+  return dispatch => api(`admin/maq`, 'post', data).then(res => {
     return dispatch({
       type: CHANGE_MAQ_DATA,
       payload: res.maq
-    })}
+    })
+  }
   )
 }
 
@@ -221,12 +229,13 @@ export function chagneMaq(data, cb) {
 // ---------------------Game actioins---------------------
 
 export function getGames() {
-  return dispatch => api(`game`, 'get', {}).then( res => {
-    
+  return dispatch => api(`game`, 'get', {}).then(res => {
+
     return dispatch({
       type: GET_GAMES_DATA,
       payload: res.games
-    })}
+    })
+  }
   )
 }
 
@@ -235,7 +244,7 @@ export function updateGameIcon(data, cb) {
   formData.append('id', data.updateId);
   formData.append('file', data.image);
 
-  return dispatch => api(`game/icon`, 'put',formData).then(res => {
+  return dispatch => api(`game/icon`, 'put', formData).then(res => {
     cb(res);
     return dispatch({
       type: UPDATE_GAME_ICON,
@@ -249,7 +258,7 @@ export function updateGameUrl(data, cb) {
   formData.append('id', data.updateId);
   formData.append('url', data.url);
 
-  return dispatch => api(`game/url`, 'put',formData).then(res => {
+  return dispatch => api(`game/url`, 'put', formData).then(res => {
     cb(res);
     return dispatch({
       type: UPDATE_GAME_URL,
@@ -263,10 +272,10 @@ export function createGame(data, cb) {
   formData.append('file', data.image);
   formData.append('url', data.url);
 
-  return dispatch => api(`game`, 'post', formData).then( res => {
-    
+  return dispatch => api(`game`, 'post', formData).then(res => {
+
     cb(res);
-    
+
     return dispatch({
       type: CREATE_GAMES,
       payload: {
@@ -278,10 +287,11 @@ export function createGame(data, cb) {
 }
 
 export function deleteGame(id, cb) {
-  return dispatch => api(`game`, 'delete', {id}).then( res => {
+  return dispatch => api(`game`, 'delete', { id }).then(res => {
     return dispatch({
       type: DELETE_GAMES,
       payload: id
-    })}
+    })
+  }
   )
 }

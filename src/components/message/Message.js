@@ -6,9 +6,10 @@ import getTime from "../../utils/getTime";
 import config from "../../utils/config";
 import ReplyMessage from "./ReplyMessage";
 
-const Message = ({ message, setLatestView, replyCallback, getMessageById, toReply = false, stop = false }) => {
+const Message = ({ message, setLatestView, replyCallback, getMessageById, toReply = false, isReplyPanel = false, stop = false }) => {
     const [mouseOver, setMouseOver] = useState(false);
     const theme = useTheme();
+    const contentHeight = 50;
     return (
         <>
             <Box
@@ -16,9 +17,10 @@ const Message = ({ message, setLatestView, replyCallback, getMessageById, toRepl
                     cursor: toReply ? "pointer" : "unset",
                     display: "flex",
                     justifyContent:
-                        message.party === "sender" && !toReply ? "flex-start" : "flex-end",
-                    margin: "5px",
+                        message.party === "sender" || toReply ? "flex-start" : "flex-end",
+                    margin: "5px"
                 }}
+                onClick={(e) => { console.log(123) }}
             >
                 <Card
                     onMouseOverCapture={() => setMouseOver(true)}
@@ -36,20 +38,20 @@ const Message = ({ message, setLatestView, replyCallback, getMessageById, toRepl
                                     ? "#2196f3"
                                     : theme.palette.common.green),
                         overflowWrap: "break-word",
-                        maxWidth: toReply ? "unset" : "40%"
+                        // maxWidth: toReply ? "unset" : "60%"
                     }}
                     style={
                         message.party === "sender"
                             ? {
                                 borderTopLeftRadius: "10px",
-                                borderBottomLeftRadius: "10px",
-                                borderBottomRightRadius: "0px",
+                                borderBottomRightRadius: "10px",
+                                borderBottomLeftRadius: "0px",
                                 borderTopRightRadius: "10px",
                             }
                             : {
                                 borderTopLeftRadius: "10px",
-                                borderBottomRightRadius: "10px",
-                                borderBottomLeftRadius: "0px",
+                                borderBottomLeftRadius: "10px",
+                                borderBottomRightRadius: "0px",
                                 borderTopRightRadius: "10px",
                             }
                     }
@@ -67,41 +69,50 @@ const Message = ({ message, setLatestView, replyCallback, getMessageById, toRepl
                         </IconButton>
                     }
                     {
-                        !toReply &&
                         <Typography
                             variant="body1"
-                            color="gray"
+                            color="yellow"
                             fontSize="1.2rem"
                             style={{ mb: 1, textDecorationLine: "underline" }}
                         >
-                            {message.party !== "sender" ? message.senderName : ""}
+                            {message.senderName}
                         </Typography>
                     }
                     {
-                        message.replyTo!=null && !stop &&
+                        message.replyTo != null && !stop &&
                         <ReplyMessage
-                            message = {getMessageById(message.replyTo)}
+                            message={getMessageById(message.replyTo)}
                             setLatestView={setLatestView} />
                     }
+
                     {message.type === "Text" ?
-                        (<Typography variant="body1">{message.message}</Typography>) :
+                        (<Typography variant="body1"
+                            style={
+                                !isReplyPanel ?
+                                    { whiteSpace: "pre-wrap" } :
+                                    { whiteSpace: "pre-wrap", height: `${contentHeight}px`, overflow: "hidden" }}
+                        >{message.message}</Typography>) :
                         (
-                            <>
-                                <Stack mt={2} textAlign="center">
+                            <div style={
+                                isReplyPanel ? { display: "flex", flexDirection: "row", gap: "10px", overflow: "hidden", height: `${contentHeight}px` } :
+                                    { display: "flex", flexDirection: "column" }}>
+                                <div>
                                     <img
                                         src={`${config.server}:${config.port}/chat/${message.message}`}
                                         alt={message.message}
-                                        style={{ height: toReply ? "50px" : "100%" }}
+                                        style={isReplyPanel ? { height: `${contentHeight}px`, maxWidth: "50px" } : { height: "auto", maxWidth: "100%" }}
                                         onLoad={() => {
                                             setLatestView()
                                         }}
                                     />
-                                </Stack>
-                                <Typography variant="body1">{message.caption}</Typography>
-                            </>
+                                </div>
+                                <Typography variant="body1" style={
+                                    !isReplyPanel ?
+                                        { whiteSpace: "pre-wrap" } :
+                                        { whiteSpace: "pre-wrap", height: `${contentHeight}px`, overflow: "hidden" }}>{message.caption}</Typography>
+                            </div>
                         )
                     }
-
                     <Box
                         sx={{
                             display: "flex",

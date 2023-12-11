@@ -43,9 +43,6 @@ const UserItem = ({
     role,
 }) => {
     const dispatch = useDispatch();
-    useEffect(()=>{
-        console.log("isNew", isNew);
-    });
     const onClick = () => {
         if(!isSelected)
         {

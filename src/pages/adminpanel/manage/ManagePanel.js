@@ -18,14 +18,14 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import AddIcon from '@mui/icons-material/Add';
-import {TextField} from "@mui/material";
+import { TextField } from "@mui/material";
 import { Navigate, useNavigate } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 
-import { 
-    getSupportData,  
+import {
+    getSupportData,
     actionDeleteSupport,
-    actionActiveSupport, 
+    actionActiveSupport,
     actionBlockSupport,
     actionRegisterAgent
 } from '../../../redux/admin/actions';
@@ -45,22 +45,22 @@ function Row(props) {
                 <TableCell component="th" scope="row">{row.name}</TableCell>
                 <TableCell align="left">{row.email}</TableCell>
                 <TableCell align="center">{fDate(row.createdAt)}</TableCell>
-                <TableCell align="center"><Chip label={row.status==="active"?"Active":"Blocked"} color={`${row.status === 'active' ? 'success' : 'primary'}`} variant="outlined" /></TableCell>
-                <TableCell align="center" sx={{whiteSpace: "nowrap"}}>
-                    <Button 
-                        onClick={() => props.onAction(row._id, row.status)} 
+                <TableCell align="center"><Chip label={row.status === "active" ? "Active" : "Blocked"} color={`${row.status === 'active' ? 'success' : 'primary'}`} variant="outlined" /></TableCell>
+                <TableCell align="center" sx={{ whiteSpace: "nowrap" }}>
+                    <Button
+                        onClick={() => props.onAction(row._id, row.status)}
                         style={{ color: 'white', backgroundColor: `${row.status === 'active' ? '#bd4dbf' : 'gray'}` }}
                     >
                         {row.status === 'active' ? 'Block' : 'UnBlock'}
                     </Button>
-                    <Button 
-                        onClick={() => props.onDelete(row._id, row.status)} 
-                        style={{ color: 'white', backgroundColor: `red`, marginLeft:"5px" }}
+                    <Button
+                        onClick={() => props.onDelete(row._id, row.status)}
+                        style={{ color: 'white', backgroundColor: `red`, marginLeft: "5px" }}
                     >
                         Delete
                     </Button>
                 </TableCell>
-                
+
             </TableRow>
         </>
     );
@@ -154,7 +154,7 @@ const ManagePanel = ({
     const getDataHandler = (page, rowsPerPage, search = "") => {
         getSupportData({
             page,
-            row: rowsPerPage, 
+            row: rowsPerPage,
             search
         }, res => {
             if (res.success) {
@@ -166,25 +166,25 @@ const ManagePanel = ({
     const onAction = (id, status) => {
 
         if (status === "blocked") {
-            actionActiveSupport({id}, res => {
-                if(res.success) {
+            actionActiveSupport({ id }, res => {
+                if (res.success) {
                     getDataHandler(page, rowsPerPage);
                 }
             });
         } else {
-            actionBlockSupport({id}, res => {
-                if(res.success) {
+            actionBlockSupport({ id }, res => {
+                if (res.success) {
                     getDataHandler(page, rowsPerPage);
                 }
             });
-            
+
         }
     }
 
     const onDelete = (id, status) => {
 
         actionDeleteSupport(id, res => {
-            if(res.success) {
+            if (res.success) {
                 getDataHandler(page, rowsPerPage);
             }
             dispatch(onShowAlert(res.msg, res.success));
@@ -193,8 +193,8 @@ const ManagePanel = ({
 
     const onAddAgent = (name, email, password) => {
         setPage(0);
-        actionRegisterAgent({name, email, password}, res => {
-            if(res.success) {
+        actionRegisterAgent({ name, email, password }, res => {
+            if (res.success) {
                 getDataHandler(page, rowsPerPage);
             }
             dispatch(onShowAlert(res.msg, res.success));
@@ -213,18 +213,18 @@ const ManagePanel = ({
 
     return (
         <>
-            <Box 
+            <Box
                 sx={{
-                    width:"100%",
-                    display:"flex",
+                    width: "100%",
+                    display: "flex",
                     justifyContent: "end",
                     mb: 1,
                     mt: 1
                 }}
             >
-                <Button sx={{ml: 1}} onClick={()=>setOpen(true)} style={{ color: 'white', backgroundColor: '#0888a0' }}><AddIcon/>Add Agent</Button>
+                <Button sx={{ ml: 1 }} onClick={() => setOpen(true)} style={{ color: 'white', backgroundColor: '#0888a0' }}><AddIcon />Add Agent</Button>
             </Box>
-            <TableContainer component={Paper} sx={{ width: 'auto', backgroundColor:"#ffffff05" }}>
+            <TableContainer component={Paper} sx={{ width: 'auto', backgroundColor: "#ffffff05" }}>
                 <Table aria-label="collapsible table" sx={{ minWidth: 750 }}>
                     <TableHead>
                         <TableRow>
@@ -238,12 +238,12 @@ const ManagePanel = ({
                     </TableHead>
                     <TableBody>
                         {data.map((row, index) => (
-                            <Row 
-                                key={row._id} 
-                                no = {index} 
-                                row={row} 
-                                onAction={(id, status) => onAction(id, status)} 
-                                onDelete={(id, status) => onDelete(id, status)} 
+                            <Row
+                                key={row._id}
+                                no={index}
+                                row={row}
+                                onAction={(id, status) => onAction(id, status)}
+                                onDelete={(id, status) => onDelete(id, status)}
                             />
                         ))}
                     </TableBody>
@@ -265,7 +265,7 @@ const ManagePanel = ({
                     ActionsComponent={TablePaginationActions}
                 />
             </TableContainer>
-            <SupportAddModal open={open} handleClose={()=>setOpen(false)} onSend={onAddAgent}/>
+            <SupportAddModal open={open} handleClose={() => setOpen(false)} onSend={onAddAgent} />
         </>
     );
 }
@@ -276,6 +276,6 @@ const mapDispatchToProps = (dispatch) => ({
     actionBlockSupport: (data, cb) => dispatch(actionBlockSupport(data, cb)),
     actionActiveSupport: (data, cb) => dispatch(actionActiveSupport(data, cb)),
     actionRegisterAgent: (data, cb) => dispatch(actionRegisterAgent(data, cb)),
-    
+
 })
 export default connect(null, mapDispatchToProps)(ManagePanel);

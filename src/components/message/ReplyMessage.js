@@ -2,10 +2,13 @@
 import React from "react";
 import Message from "./Message";
 
-const ReplyMessage = ({ message, setLatestView }) => {
+const ReplyMessage = ({ message, setLatestView, isReplyPanel = false }) => {
     return (
         <div
-            onClick={() => document.getElementById(message._id).scrollIntoView({ block: "start", behavior: "smooth" })}
+            onClick={(e) => {
+                e.stopPropagation();
+                document.getElementById(message._id).scrollIntoView({ block: "start", behavior: "smooth" });
+            }}
             onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === "Space") {
                     document.getElementById(message._id).scrollIntoView({ block: "start", behavior: "smooth" });
@@ -14,6 +17,7 @@ const ReplyMessage = ({ message, setLatestView }) => {
             role="button"
             tabIndex="0">
             <Message
+                isReplyPanel={isReplyPanel}
                 message={message}
                 setLatestView={setLatestView}
                 stop

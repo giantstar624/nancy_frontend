@@ -12,9 +12,7 @@ import { openLoginOrSignupModal } from '../redux/user/actions';
 
 const PromotionPage = ({
   getPromos,
-  promos,
-  isLogin,
-  openLoginOrSignupModal
+  promos
 }) => {
 
   const [loading, setLoading] = useState(false);
@@ -24,7 +22,7 @@ const PromotionPage = ({
     // if (!isLogin)
     //   openLoginOrSignupModal('login');
     // else {
-      getPromosHandler(page + 1);
+    getPromosHandler(page + 1);
     // }
   }
   const getPromosHandler = page => {
@@ -57,7 +55,7 @@ const PromotionPage = ({
           ))}
         </Grid>
         <Grid container style={{ marginTop: 30, justifyContent: 'center', display: 'flex' }}>
-          <Button sx={{backgroundColor:"#32af0f"}} variant="contained"  color="success" onClick={loadMoreHandle}>Load more</Button>
+          <Button sx={{ backgroundColor: "#32af0f" }} variant="contained" color="success" onClick={loadMoreHandle}>Load more</Button>
         </Grid>
       </Container>
     </>

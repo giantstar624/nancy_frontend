@@ -65,12 +65,15 @@ const AdminChat = () => {
     const [selectedUser, setSelectedUser] = useState("");
 
     const [replyTo, setReplyTo] = useState(null);
+    const typingWindow = useRef();
+    const messageListBoxRef = useRef();
+    const [typingWindowHeight, setTypingWindowHeight] = useState();
+    const emojiHeight = 300;
+    const replyPanelHeight = 120; // include margin
     // toggles emoji window card
     const toggleEmoji = () => {
         setShowEmoji((prev) => !prev);
     };
-
-
     const onEmojiClick = (emojiData, event) => {
 
         const sym = emojiData.unified.split('-')
@@ -81,7 +84,7 @@ const AdminChat = () => {
     }
 
     const handleKeyDown = (e) => {
-        if (e.keyCode === 13) {
+        if (e.keyCode === 13 && !e.shiftKey) {
             e.preventDefault();
             sendMessage(message);
         }
@@ -135,8 +138,8 @@ const AdminChat = () => {
         Object.values(chatHistory).forEach(item => {
 
             // const chat = {sender: "James", party: "sender", type: "Text", message:"Hi", date: item.date};
-            const chat = {...item};
-            if (_id === item.from) {
+            const chat = { ...item };
+            if (_id === item.from || (item.to !== _id && item.from !== item.to)) {
                 chat.party = "sender";
             }
             else {
@@ -163,7 +166,6 @@ const AdminChat = () => {
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ block: "end", behavior: "auto" });
     }, [JSON.stringify(messageList)]);
-
     const setLatestView = () => {
         bottomRef.current?.scrollIntoView({ block: "end", behavior: "auto" });
     }
@@ -172,6 +174,7 @@ const AdminChat = () => {
     }
 
     useEffect(() => {
+
         if (role === 0 || role === "0") {
             dispatch(getMessageWS(_id));
         } else {
@@ -183,7 +186,16 @@ const AdminChat = () => {
             dispatch(getMessageWS(roomId));
         }
     }, []);
-
+    useEffect(() => {
+        if (!typingWindow.current) return;
+        const resizeObserver = new ResizeObserver(() => {
+            // Do what you want to do when the size of the element changes
+            console.log(messageListBoxRef.current.getBoundingClientRect().y);
+            setTypingWindowHeight(typingWindow.current.clientHeight + messageListBoxRef.current.getBoundingClientRect().y + 25);
+        });
+        resizeObserver.observe(typingWindow.current);
+        // return () => {resizeObserver.disconnect();} // clean up 
+    }, []);
     return (
         <>
             <Helmet>
@@ -195,7 +207,7 @@ const AdminChat = () => {
                 <Container maxWidth="xl"
                     sx={{
                         display: (curPage === "user" && mobileScreen && role !== 0 && role !== "0") ? "none" : "block",
-                        width: "100%"
+                        minWidth: "75%"
                     }}
                 >
                     {mobileScreen && <Box
@@ -219,8 +231,11 @@ const AdminChat = () => {
                     </Box>}
 
                     <Box
+                        ref={messageListBoxRef}
                         sx={{
-                            height: mobileScreen ? `calc(100vh - ${showEmoji ? "572px" : "250px"})` : `calc(100vh - ${showEmoji ? "542px" : "182px"})`,
+                            // height: mobileScreen ? `calc(100vh - ${showEmoji ? "572px" : "212px"})` : `calc(100vh - ${showEmoji ? "542px" : "182px"})`,
+                            height: mobileScreen ? `calc(100vh - ${(showEmoji ? emojiHeight : 0) + typingWindowHeight + (replyTo ? replyPanelHeight + 15 : 0)}px)` :
+                                `calc(100vh - ${(showEmoji ? emojiHeight : 0) + typingWindowHeight + (replyTo ? replyPanelHeight + 15 : 0)}px)`,
                             bgcolor: (theme) =>
                                 theme.palette.mode !== "dark"
                                     ? "black"
@@ -262,28 +277,30 @@ const AdminChat = () => {
                     )}
                     {
                         replyTo != null &&
-                        <Box>
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    mt: "15px",
-                                    gap: "5px",
-                                    bgcolor: "#555555",
-                                    alignItems: "center"
-                                }}>
-                                <ReplyIcon sx={{ width: 50, height: 50 }} />
-                                <Divider orientation='vertical' flexItem color='white'/>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                flexDirection: "row",
+                                mt: "15px",
+                                gap: "5px",
+                                bgcolor: "#555555",
+                                alignItems: "center",
+                                height: `${replyPanelHeight}px`
+                            }}>
+                            <ReplyIcon sx={{ width: 50, height: 50 }} />
+                            <Divider orientation='vertical' flexItem color='white' />
+                            <div style={{ maxWidth: "calc(100% - 110px)" }}>
                                 <ReplyMessage
+                                    isReplyPanel
                                     setLatestView={setLatestView}
                                     message={getMessageById(replyTo)} />
-                                <IconButton
-                                    onClick={() => setReplyTo(null)}
-                                    edge="end"
-                                    sx={{ width: 60, height: 60 }} component="span">
-                                    <Close />
-                                </IconButton>
-                            </Box>
+                            </div>
+                            <IconButton
+                                onClick={() => setReplyTo(null)}
+                                edge="end"
+                                sx={{ width: 50, height: 50 }} component="span">
+                                <Close />
+                            </IconButton>
                         </Box>
                     }
                     <Box style={{ display: (roomId && roomId !== "") ? "block" : "none" }}>
@@ -317,6 +334,7 @@ const AdminChat = () => {
                                 </FormLabel>
                             </>
                             <TextField
+                                ref={typingWindow}
                                 placeholder="Type here..."
                                 variant="outlined"
                                 type={"text"}
@@ -325,7 +343,8 @@ const AdminChat = () => {
                                 onKeyDown={handleKeyDown}
                                 sx={{ width: "90%" }}
                                 multiline
-                                maxRows={1}
+                                maxRows={5}
+                            // maxRows={1}
                             />
 
                             <IconButton
@@ -371,7 +390,7 @@ const AdminChat = () => {
                                 pickerStyle={{ zIndex: 10000, bottom: 400, width: "100%" }}
                                 name="emoji-picker"
                                 width={"100%"}
-                                height={"360px"}
+                                height={`${emojiHeight}px`}
                             />
                         </Box>
                     )}
