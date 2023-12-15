@@ -36,12 +36,15 @@ const PromoCard = ({ promo }) => {
                         {fDate(promo.createdAt)}
                     </Typography>
                 </CardActions>
-                {promo.showTag ? <div style={{
-                    position: "absolute",
-                    right: "10px",
-                    top: "10px",
-                    backgroundColor: "green"
-                }}>New</div> : <></>}
+                {promo.showTag ? <img
+                    src="/assets/new.png"
+                    alt='new brand'
+                    style={{
+                        position: "absolute",
+                        right: "0px",
+                        top: "0px",
+                    }}
+                /> : <></>}
 
             </Card>
             <ShowImgCard open={open} handleClose={handleClose} url={`${config.server}:${config.port}/promoImg/${promo?.image}`} />

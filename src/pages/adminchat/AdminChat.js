@@ -234,7 +234,7 @@ const AdminChat = () => {
                         ref={messageListBoxRef}
                         sx={{
                             // height: mobileScreen ? `calc(100vh - ${showEmoji ? "572px" : "212px"})` : `calc(100vh - ${showEmoji ? "542px" : "182px"})`,
-                            height: mobileScreen ? `calc(100vh - ${(showEmoji ? emojiHeight : 0) + typingWindowHeight + (replyTo ? replyPanelHeight + 15 : 0)}px)` :
+                            height: mobileScreen ? `calc(100vh - ${40 + (showEmoji ? emojiHeight : 0) + typingWindowHeight + (replyTo ? replyPanelHeight + 15 : 0)}px)` :
                                 `calc(100vh - ${(showEmoji ? emojiHeight : 0) + typingWindowHeight + (replyTo ? replyPanelHeight + 15 : 0)}px)`,
                             bgcolor: (theme) =>
                                 theme.palette.mode !== "dark"
