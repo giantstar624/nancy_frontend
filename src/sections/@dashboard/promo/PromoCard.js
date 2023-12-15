@@ -37,7 +37,7 @@ const PromoCard = ({ promo }) => {
                     </Typography>
                 </CardActions>
                 {promo.showTag ? <img
-                    src="/assets/new.png"
+                    src="/assets/new1.png"
                     alt='new brand'
                     style={{
                         position: "absolute",

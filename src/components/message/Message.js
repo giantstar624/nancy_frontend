@@ -44,7 +44,7 @@ const Message = ({ message, setLatestView, replyCallback, getMessageById, toRepl
                     cursor: toReply ? "pointer" : "unset",
                     display: "flex",
                     justifyContent:
-                        message.party === "sender" || toReply ? "flex-start" : "flex-end",
+                        message.party !== "sender" || toReply ? "flex-start" : "flex-end",
                     margin: "5px",
                     alignItems: "center"
                 }}

@@ -188,10 +188,11 @@ const AdminChat = () => {
     }, []);
     useEffect(() => {
         if (!typingWindow.current) return;
+        const curY = messageListBoxRef.current.getBoundingClientRect().top;
         const resizeObserver = new ResizeObserver(() => {
-            // Do what you want to do when the size of the element changes
-            console.log(messageListBoxRef.current.getBoundingClientRect().y);
-            setTypingWindowHeight(typingWindow.current.clientHeight + messageListBoxRef.current.getBoundingClientRect().y + 25);
+            // Do what you want to do when the size of the element change
+            console.log(curY);
+            setTypingWindowHeight(typingWindow.current.clientHeight + curY + 25);
         });
         resizeObserver.observe(typingWindow.current);
         // return () => {resizeObserver.disconnect();} // clean up 
@@ -201,7 +202,7 @@ const AdminChat = () => {
             <Helmet>
                 <title> Chat | Nancy Room </title>
             </Helmet>
-            <Box sx={{ display: "flex" }}>
+            <Box sx={{ display: "flex", height: "100%" }}>
                 {role > 0 && <UserList mobileScreen={mobileScreen} userList={users} curPage={curPage} setCurPage={setCurPage} selectedUser={selectedUser} setSelectedUser={setSelectedUser} />}
 
                 <Container maxWidth="xl"
