@@ -20,6 +20,7 @@ import EmojiPicker, {
 import SendIcon from "@mui/icons-material/Send";
 import ImageIcon from "@mui/icons-material/Image";
 import { Reply as ReplyIcon, Close } from "@mui/icons-material";
+import ArrowCircleDownTwoToneIcon from '@mui/icons-material/ArrowCircleDownTwoTone';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
@@ -65,6 +66,7 @@ const AdminChat = () => {
     const [selectedUser, setSelectedUser] = useState("");
 
     const [replyTo, setReplyTo] = useState(null);
+    const [showDownScroll, setShowDownScroll] = useState(false);
     const typingWindow = useRef();
     const messageListBoxRef = useRef();
     const [typingWindowHeight, setTypingWindowHeight] = useState();
@@ -188,10 +190,10 @@ const AdminChat = () => {
     }, []);
     useEffect(() => {
         if (!typingWindow.current) return;
-        const curY = messageListBoxRef.current.getBoundingClientRect().top;
         const resizeObserver = new ResizeObserver(() => {
-            // Do what you want to do when the size of the element change
+            const curY = 92; // messageListBoxRef.current.getBoundingClientRect().y;
             console.log(curY);
+            // Do what you want to do when the size of the element change
             setTypingWindowHeight(typingWindow.current.clientHeight + curY + 25);
         });
         resizeObserver.observe(typingWindow.current);
@@ -202,7 +204,7 @@ const AdminChat = () => {
             <Helmet>
                 <title> Chat | Nancy Room </title>
             </Helmet>
-            <Box sx={{ display: "flex", height: "100%" }}>
+            <Box sx={{ display: "flex" }}>
                 {role > 0 && <UserList mobileScreen={mobileScreen} userList={users} curPage={curPage} setCurPage={setCurPage} selectedUser={selectedUser} setSelectedUser={setSelectedUser} />}
 
                 <Container maxWidth="xl"
@@ -230,39 +232,57 @@ const AdminChat = () => {
                         ><ArrowBackIosNewIcon />Back</Box>
                         <h2>{selectedUser}</h2>
                     </Box>}
+                    <div style={{ position: "relative" }}>
 
-                    <Box
-                        ref={messageListBoxRef}
-                        sx={{
-                            // height: mobileScreen ? `calc(100vh - ${showEmoji ? "572px" : "212px"})` : `calc(100vh - ${showEmoji ? "542px" : "182px"})`,
-                            height: mobileScreen ? `calc(100vh - ${40 + (showEmoji ? emojiHeight : 0) + typingWindowHeight + (replyTo ? replyPanelHeight + 15 : 0)}px)` :
-                                `calc(100vh - ${(showEmoji ? emojiHeight : 0) + typingWindowHeight + (replyTo ? replyPanelHeight + 15 : 0)}px)`,
-                            bgcolor: (theme) =>
-                                theme.palette.mode !== "dark"
-                                    ? "black"
-                                    : theme.palette.grey[50],
-                            display: "flex",
-                            flexDirection: "column",
-                            borderBottom: "0.5px solid #bdbdbd",
-                            overflow: "scroll",
-                            overflowX: "hidden",
-                        }}
-                        className="scrollbar"
-                    >
-                        {(role === 0 || role === "0" || (role > 0 && roomId !== "")) && messageList.map((message, index) => (
-                            <div id={message._id}
-                                key={index}>
-                                <Message
-                                    message={message}
-                                    setLatestView={setLatestView}
-                                    replyCallback={replyCallback}
-                                    getMessageById={getMessageById}
-                                />
-                                <div ref={bottomRef} />
-                            </div>
-                        ))}
+                        <Box
+                            onScroll={(e) => {
+                                const ele = e.target;
+                                if (ele.scrollTop < ele.scrollHeight - ele.clientHeight * 2) setShowDownScroll(true);
+                                else setShowDownScroll(false);
+                            }}
+                            ref={messageListBoxRef}
+                            sx={{
+                                // height: mobileScreen ? `calc(100vh - ${showEmoji ? "572px" : "212px"})` : `calc(100vh - ${showEmoji ? "542px" : "182px"})`,
+                                height: mobileScreen ? `calc(100vh - ${40 + (showEmoji ? emojiHeight : 0) + typingWindowHeight + (replyTo ? replyPanelHeight + 15 : 0)}px)` :
+                                    `calc(100vh - ${(showEmoji ? emojiHeight : 0) + typingWindowHeight + (replyTo ? replyPanelHeight + 15 : 0)}px)`,
+                                bgcolor: (theme) =>
+                                    theme.palette.mode !== "dark"
+                                        ? "black"
+                                        : theme.palette.grey[50],
+                                display: "flex",
+                                flexDirection: "column",
+                                borderBottom: "0.5px solid #bdbdbd",
+                                overflow: "scroll",
+                                overflowX: "hidden"
+                            }}
+                            className="scrollbar"
+                        >
+                            {(role === 0 || role === "0" || (role > 0 && roomId !== "")) && messageList.map((message, index) => (
+                                <div id={message._id}
+                                    key={index}>
+                                    <Message
+                                        message={message}
+                                        setLatestView={setLatestView}
+                                        replyCallback={replyCallback}
+                                        getMessageById={getMessageById}
+                                    />
+                                    <div ref={bottomRef} />
+                                </div>
+                            ))}
+                        </Box>
+                        {showDownScroll && <IconButton
+                            onClick={setLatestView}
+                            sx={{
+                                position: "absolute",
+                                right: 0,
+                                bottom: 0
+                            }}
+                            component="span">
+                            <ArrowCircleDownTwoToneIcon sx={{ width: 50, height: 50, color: "white" }} />
+                        </IconButton>}
 
-                    </Box>
+                    </div>
+
 
                     {imageUrl && imageFile && (
                         <>
