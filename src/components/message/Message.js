@@ -126,7 +126,7 @@ const Message = ({ message, setLatestView, replyCallback, getMessageById, toRepl
                         >{message.message}</Typography>) :
                         (
                             <div style={
-                                isReplyPanel ? { display: "flex", flexDirection: "row", gap: "10px", overflow: "hidden", height: `${contentHeight}px` } :
+                                isReplyPanel || toReply ? { display: "flex", flexDirection: "row", gap: "10px", overflow: "hidden", height: `${contentHeight}px` } :
                                     { display: "flex", flexDirection: "column" }}>
                                 <div
                                     onClick={(e) => {
@@ -143,7 +143,7 @@ const Message = ({ message, setLatestView, replyCallback, getMessageById, toRepl
                                     <img
                                         src={`${config.server}:${config.port}/chat/${message.message}`}
                                         alt={message.message}
-                                        style={isReplyPanel ? { height: `${contentHeight}px`, maxWidth: "50px" } : { height: "auto", maxWidth: "40vw", maxHeight: "40vh" }}
+                                        style={isReplyPanel || toReply ? { height: `${contentHeight}px`, maxWidth: "50px" } : { height: "auto", maxWidth: "40vw", maxHeight: "40vh" }}
                                         onLoad={() => {
                                             setLatestView()
                                         }}
