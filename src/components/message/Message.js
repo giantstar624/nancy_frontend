@@ -143,7 +143,7 @@ const Message = ({ message, setLatestView, replyCallback, getMessageById, toRepl
                                     <img
                                         src={`${config.server}:${config.port}/chat/${message.message}`}
                                         alt={message.message}
-                                        style={isReplyPanel ? { height: `${contentHeight}px`, maxWidth: "50px" } : { height: "auto", maxWidth: "40vw" }}
+                                        style={isReplyPanel ? { height: `${contentHeight}px`, maxWidth: "50px" } : { height: "auto", maxWidth: "40vw", maxHeight: "40vh" }}
                                         onLoad={() => {
                                             setLatestView()
                                         }}
