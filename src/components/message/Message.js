@@ -7,7 +7,7 @@ import getTime from "../../utils/getTime";
 import config from "../../utils/config";
 import ReplyMessage from "./ReplyMessage";
 
-const Message = ({ message, setLatestView, replyCallback, getMessageById, toReply = false, isReplyPanel = false, stop = false }) => {
+const Message = ({ message, setLatestView, replyCallback, getMessageById, toReply = false, isReplyPanel = false, stop = false, setOpenImg, setImgUrl }) => {
     const [mouseOver, setMouseOver] = useState(false);
     const [showReplyButton, setShwoReplyButton] = useState(false);
     const [replyButtonSize, setReplyButtonSize] = useState(0);
@@ -128,11 +128,22 @@ const Message = ({ message, setLatestView, replyCallback, getMessageById, toRepl
                             <div style={
                                 isReplyPanel ? { display: "flex", flexDirection: "row", gap: "10px", overflow: "hidden", height: `${contentHeight}px` } :
                                     { display: "flex", flexDirection: "column" }}>
-                                <div>
+                                <div
+                                    onClick={(e) => {
+                                        if (toReply) return;
+                                        e.stopPropagation();
+                                        setImgUrl(`${config.server}:${config.port}/chat/${message.message}`);
+                                        setOpenImg(true);
+                                    }}
+
+                                    onKeyDown={(e) => {
+                                    }}
+                                    role="button"
+                                    tabIndex="0">
                                     <img
                                         src={`${config.server}:${config.port}/chat/${message.message}`}
                                         alt={message.message}
-                                        style={isReplyPanel ? { height: `${contentHeight}px`, maxWidth: "50px" } : { height: "auto", maxWidth: "100%" }}
+                                        style={isReplyPanel ? { height: `${contentHeight}px`, maxWidth: "50px" } : { height: "auto", maxWidth: "40vw" }}
                                         onLoad={() => {
                                             setLatestView()
                                         }}

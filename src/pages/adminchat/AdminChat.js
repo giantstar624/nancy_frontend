@@ -32,7 +32,7 @@ import { onShowAlert } from '../../redux/user/actions';
 
 import Message from "../../components/message/Message";
 import FileMessageModal from "../../components/message/FileMessageModal";
-
+import ShowImgCard from '../../sections/@dashboard/promo/ShowImgCard';
 
 
 const AdminChat = () => {
@@ -67,6 +67,8 @@ const AdminChat = () => {
 
     const [replyTo, setReplyTo] = useState(null);
     const [showDownScroll, setShowDownScroll] = useState(false);
+    const [openImg, setOpenImg] = useState(false);
+    const [imgUrl, setImgUrl] = useState("");
     const typingWindow = useRef();
     const messageListBoxRef = useRef();
     const [typingWindowHeight, setTypingWindowHeight] = useState();
@@ -265,6 +267,8 @@ const AdminChat = () => {
                                         setLatestView={setLatestView}
                                         replyCallback={replyCallback}
                                         getMessageById={getMessageById}
+                                        setOpenImg={setOpenImg}
+                                        setImgUrl={setImgUrl}
                                     />
                                     <div ref={bottomRef} />
                                 </div>
@@ -415,6 +419,7 @@ const AdminChat = () => {
                             />
                         </Box>
                     )}
+                    <ShowImgCard open={openImg} handleClose={() => setOpenImg(false)} url={imgUrl} />
                 </Container>
             </Box>
         </>
