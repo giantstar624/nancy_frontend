@@ -80,14 +80,14 @@ const ShowImgCard = ({ open, handleClose, url }) => {
                                 height="140"
                                 image={url}
                                 alt="green iguana"
-                                style={{height: '100%'}}
+                                style={{ height: '100%' }}
                             />
                         </StyledContent>
-                        <Stack direction="row" spacing={2} mt={2}>
+                        {/* <Stack direction="row" spacing={2} mt={2}>
                             <Button  size="large" color="inherit" variant="outlined" onClick={() => { handleClose(); }}>
                                 CLOSE
                             </Button>
-                        </Stack>
+                        </Stack> */}
                     </Container>
                 </StyledRoot>
             </DialogContent>
