@@ -72,7 +72,7 @@ export function chatReducer(state = initialState, action) {
             let newUser;
             let newUserIndex = -1;
             _users = _users.map((item, index) => {
-                if (item.user) {
+                if (item.user && messageData.from === item.user._id) {
                     item.isnew = true;
                     newUser = item;
                     newUserIndex = index;
