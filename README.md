@@ -6,12 +6,9 @@
 
 ## API
 - src/utils/config.js
-  - server: server url
+  - server: server url (backend)
   - port : server port
   - baseURL : server api base url
-
-- src/utils/socket.js
-    Create socket.io
 
 ## License
 
