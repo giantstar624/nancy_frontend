@@ -1,13 +1,13 @@
-import { useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useSearchParams, useNavigate  } from 'react-router-dom';
-import { 
-  Container, 
-  AppBar, 
-  Toolbar, 
-  Box, 
-  IconButton, 
+import { NavLink, useSearchParams, useNavigate } from 'react-router-dom';
+import {
+  Container,
+  AppBar,
+  Toolbar,
+  Box,
+  IconButton,
   Typography,
   Grid,
   FormLabel,
@@ -33,15 +33,15 @@ const StyledRoot = styled(AppBar)(({ theme }) => ({
   ...bgBlur({ color: theme.palette.background.default }),
   boxShadow: 'none',
   [theme.breakpoints.up('lg')]: {
-      width: `calc(100% - 1}px)`,
+    width: `calc(100% - 1}px)`,
   },
 }));
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   minHeight: HEADER_MOBILE,
   [theme.breakpoints.up('lg')]: {
-      minHeight: HEADER_DESKTOP,
-      padding: theme.spacing(0, 5),
+    minHeight: HEADER_DESKTOP,
+    padding: theme.spacing(0, 5),
   },
 }));
 
@@ -58,127 +58,127 @@ const ResetPassword = () => {
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
-  const mail = searchParams.get('email'); 
-  const code = searchParams.get('code'); 
+  const mail = searchParams.get('email');
+  const code = searchParams.get('code');
 
   const dispatch = useDispatch();
   const userModule = useSelector((state) => state.userModule);
 
   const [newPassword, setNewPassword] = useState({
     email: "",
-    password:"",
-    confirm:""
+    password: "",
+    confirm: ""
   });
 
   const [redAlert, setRedAlert] = useState(false);
-  const [sentLink, setSentLink] = useState(mail && mail!=="" && code && code !== "");
-  
+  const [sentLink, setSentLink] = useState(mail && mail !== "" && code && code !== "");
+
   // console.log(mail, code, sentLink);
 
   useEffect(() => {
-   
+
   }, []);
 
   const onSendResetPassword = () => {
-    if(newPassword.password !== newPassword.confirm) {
+    if (newPassword.password !== newPassword.confirm) {
       setRedAlert(true);
-      return ;
+      return;
     }
     setRedAlert(false);
-    
+
     dispatch(onResetPassword({
       email: mail,
       newpassword: newPassword.password,
-      code     
+      code
     }, (res) => {
       navigate("/");
     }));
   }
 
   const onSendRequest = () => {
-    if(newPassword.email === "") {
-      return ;
+    if (newPassword.email === "") {
+      return;
     }
-    
-    dispatch(onRequestPassword({email: newPassword.email}, (res)=>{
-      if(res.success) {
+
+    dispatch(onRequestPassword({ email: newPassword.email }, (res) => {
+      if (res.success) {
         navigate("/");
-        // dispatch(onShowAlert("Please check your mail", true));
+        // dispatch(onShowAlert("Please check your email", true));
       }
     }));
   }
-  
+
   return (
     <>
       <Helmet>
-          <title> Home | Nancy Room </title>
+        <title> Home | Nancy Room </title>
       </Helmet>
       <StyledRoot>
-          <StyledToolbar>
-              <Logo />
-              <Box sx={{ flexGrow: 1 }} />
-              <NavLink
-                  to={'/dashboard/app'}
-                  sx={{
-                      mr: 1,
-                      color: 'text.primary',
-                      display: { lg: 'none' },
-                  }}
-              >
-                  <IconButton>
-                      <HomeIcon style={{ color: 'white' }} />
-                  </IconButton>
-              </NavLink>
-          </StyledToolbar>
+        <StyledToolbar>
+          <Logo />
+          <Box sx={{ flexGrow: 1 }} />
+          <NavLink
+            to={'/dashboard/app'}
+            sx={{
+              mr: 1,
+              color: 'text.primary',
+              display: { lg: 'none' },
+            }}
+          >
+            <IconButton>
+              <HomeIcon style={{ color: 'white' }} />
+            </IconButton>
+          </NavLink>
+        </StyledToolbar>
       </StyledRoot>
-      <Container style={{marginTop: 100}}>
+      <Container style={{ marginTop: 100 }}>
         <Box>
-          <Box sx={{display:"flex", alignItems:"center"}}>
-            <SecurityIcon sx={{mr:1}}/> <h2>Security</h2>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <SecurityIcon sx={{ mr: 1 }} /> <h2>Security</h2>
           </Box>
 
-          <Grid container sx={{justifyContent:"center"}}>
+          <Grid container sx={{ justifyContent: "center" }}>
             {sentLink && <>
-              <Grid item md={4} xs={12} sm={12} sx={{p: 1}}>
-                <FormLabel sx={{color:"#ffffff"}}>New Password:</FormLabel>
+              <Grid item md={4} xs={12} sm={12} sx={{ p: 1 }}>
+                <FormLabel sx={{ color: "#ffffff" }}>New Password:</FormLabel>
                 <OutlinedInput
-                    placeholder="Create a strong new password"
-                    type={"password"}
-                    value={newPassword.password}
-                    onChange={(e)=>setNewPassword({...newPassword, password: e.target.value})}
-                    sx={{ width: "100%" }}
+                  placeholder="Create a strong new password"
+                  type={"password"}
+                  value={newPassword.password}
+                  onChange={(e) => setNewPassword({ ...newPassword, password: e.target.value })}
+                  sx={{ width: "100%" }}
                 />
               </Grid>
-              <Grid item md={4} xs={12} sm={12} sx={{p: 1}}>
-                <FormLabel sx={{color:"#ffffff"}}>Confirm Password:</FormLabel>
+              <Grid item md={4} xs={12} sm={12} sx={{ p: 1 }}>
+                <FormLabel sx={{ color: "#ffffff" }}>Confirm Password:</FormLabel>
                 <TextField
-                    placeholder="Confirm your new password"
-                    type={"password"}
-                    value={newPassword.confirm}
-                    onChange={(e)=> {
-                      if(e.target.value === newPassword.password) {
-                        setRedAlert(false);
-                      } else {
-                        setRedAlert(true);
-                      }
-                      setNewPassword({...newPassword, confirm: e.target.value})
-                    }}
-                    sx={{ width: "100%" }}
-                    color={redAlert?"error":"primary"}
-                    focused = {redAlert}
+                  placeholder="Confirm your new password"
+                  type={"password"}
+                  value={newPassword.confirm}
+                  onChange={(e) => {
+                    if (e.target.value === newPassword.password) {
+                      setRedAlert(false);
+                    } else {
+                      setRedAlert(true);
+                    }
+                    setNewPassword({ ...newPassword, confirm: e.target.value })
+                  }}
+                  sx={{ width: "100%" }}
+                  color={redAlert ? "error" : "primary"}
+                  focused={redAlert}
                 />
               </Grid>
             </>}
             {
               !sentLink && <>
-                <Grid item md={4} xs={12} sm={12} sx={{p: 1}}>
-                  <FormLabel sx={{color:"#ffffff"}}>Mail:</FormLabel>
+                <Grid item md={4} xs={12} sm={12} sx={{ p: 1 }}>
+                  <FormLabel sx={{ color: "#ffffff" }}>Mail:</FormLabel>
                   <OutlinedInput
-                      placeholder="Enter your email"
-                      type={"text"}
-                      value={newPassword.email}
-                      onChange={(e)=>setNewPassword({...newPassword, email: e.target.value})}
-                      sx={{ width: "100%" }}
+                    placeholder="Enter your email"
+                    type={"text"}
+                    value={newPassword.email}
+                    onChange={(e) => setNewPassword({ ...newPassword, email: e.target.value })}
+                    sx={{ width: "100%" }}
                   />
                 </Grid>
               </>
@@ -186,8 +186,8 @@ const ResetPassword = () => {
           </Grid>
           <Box
             sx={{
-              display:"flex",
-              justifyContent:"center",
+              display: "flex",
+              justifyContent: "center",
               mt: 6
             }}
           >
